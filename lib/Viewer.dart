@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import "package:flutter_webview_plugin/flutter_webview_plugin.dart";
+//import "package:flutter_webview_plugin/flutter_webview_plugin.dart";
 
 class Viewer extends StatelessWidget {
 
@@ -7,7 +7,8 @@ class Viewer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WebviewScaffold(url: currentUrl);
+    //return WebviewScaffold(url: currentUrl);
+    return null;
   }
 
 }

@@ -8,8 +8,7 @@ class NewsList extends StatefulWidget {
 }
 
 class NewsListState extends State<NewsList> {
-
-	final titleFont = TextStyle(fontSize: 18.0);
+  final titleFont = TextStyle(fontSize: 18.0);
 
   List<Article> _articles = List();
   var isLoading = false;
@@ -55,13 +54,13 @@ class NewsListState extends State<NewsList> {
 
   Widget getNewsBody(BuildContext context) {
     return ListView.separated(
-			separatorBuilder: (context, index) => Divider(),
+      separatorBuilder: (context, index) => Divider(),
       itemCount: _articles.length,
       itemBuilder: _buildNewsList,
     );
   }
 
   Widget _buildNewsList(BuildContext context, int i) {
-		return Article.getView(_articles[i]);
+    return Article.getView(_articles[i]);
   }
 }

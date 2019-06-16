@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "Viewer.dart";
+import "package:flutter_custom_tabs/flutter_custom_tabs.dart";
 import "API.dart";
 import "Styles.dart";
 
@@ -34,12 +34,16 @@ class Article {
         height: 65,
         width: 65,
       ),
-      onTap: () => onTapped(article)
+      onTap: () => _onTapped(article)
     );
   }
 
-    static onTapped(Article article) {
-        
+    static _onTapped(Article article) async {
+        try {
+            await launch(article.url, option: Styles.TABS_OPTIONS);
+        } catch (e) {
+            debugPrint(e.toString());
+        }
     }
 
 }
