@@ -11,6 +11,8 @@ class NewsList extends StatefulWidget {
 }
 
 class NewsListState extends State<NewsList> {
+  ScrollController _scrollController;
+
   final titleFont = TextStyle(fontSize: 18.0);
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorState =
       new GlobalKey<RefreshIndicatorState>();
@@ -18,6 +20,13 @@ class NewsListState extends State<NewsList> {
   List<Article> _articles = List();
   var isLoading = false;
   var fetchedData = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = new ScrollController();
+    _scrollController.addListener(_scrollListenner);
+  }
 
   _fetchData() async {
     setLoadingState(true);
@@ -69,6 +78,7 @@ class NewsListState extends State<NewsList> {
         key: _refreshIndicatorState,
         onRefresh: _refreshList,
         child: ListView.separated(
+          controller: _scrollController,
           separatorBuilder: (context, index) => Divider(),
           itemCount: _articles.length,
           itemBuilder: _buildNewsList,
@@ -81,5 +91,19 @@ class NewsListState extends State<NewsList> {
 
   Future<Null> _refreshList() {
     return _fetchData();
+  }
+
+  _scrollListenner() {
+    if (_scrollController.offset >= _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+            _loadMore();
+        }
+  }
+
+  _loadMore() async {
+    final result = await API.fetch(_articles.length + 1);
+    setState(() {
+     _articles.addAll(result);
+    });
   }
 }

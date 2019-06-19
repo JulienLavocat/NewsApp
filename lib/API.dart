@@ -7,11 +7,11 @@ import "Article.dart";
 
 class API {
   static final _latestUrl = "https://news.thebad.xyz/latest";
-  static final _fetchUrl = "https://news.thebad.xyz/fetch";
+  static final _fetchUrl = "https://news.thebad.xyz/from";
   static final _defaultImgUrl = "https://news.thebad.xyz/defaultImage.jpg";
   static final _sources = "https://news.thebad.xyz/sources";
 
-  static Future<List> getLatest() async {
+  static Future<List<Article>> getLatest() async {
     final result = await http.get(_latestUrl);
     if (result.statusCode != 200)
       return List();
@@ -19,7 +19,7 @@ class API {
       return _parseResponse(result);
   }
 
-  static Future<List> fetch(int from) async {
+  static Future<List<Article>> fetch(int from) async {
     final result = await http.get(_fetchUrl + "?from=" + from.toString());
     if (result.statusCode != 200)
       return List();
@@ -39,8 +39,8 @@ class API {
     return sources;
   }
 
-  static List _parseResponse(Response response) {
-    List list = List();
+  static List<Article> _parseResponse(Response response) {
+    List<Article> list = List();
 
     if (response.statusCode != 200) return list;
 
