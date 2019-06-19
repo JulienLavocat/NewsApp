@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:news/Article.dart';
 import "package:news/API.dart";
+import 'package:news/ArticleView.dart';
 
 class NewsList extends StatefulWidget {
   @override
@@ -61,6 +62,6 @@ class NewsListState extends State<NewsList> {
   }
 
   Widget _buildNewsList(BuildContext context, int i) {
-    return Article.getView(_articles[i]);
+    return ArticleView.getView(_articles[i]);
   }
 }

@@ -6,44 +6,21 @@ import "Styles.dart";
 class Article {
   final String title;
   final String description;
-  final String image;
+  final String thumbnail;
   final String url;
+  final String source;
+  final DateTime publishedAt;
 
-  Article({this.title, this.description, this.image, this.url});
+  Article({this.title, this.description, this.thumbnail, this.url, this.source,this.publishedAt});
 
   factory Article.fromJson(Map<String, dynamic> json) {
-    final imgUrl =
-        json["urlToImage"] != null ? json["urlToImage"] : API.defaultImage();
-
     return Article(
         description: json["description"],
-        image: imgUrl,
+        thumbnail: json["thumbnail"] != null ? json["thumbnail"] : API.defaultImage(),
         title: json["title"],
-        url: json["url"]);
+        url: json["url"],
+        source: json["source"],
+        publishedAt: DateTime.parse(json["publishedAt"]));
   }
-
-  static ListTile getView(Article article) {
-
-    return ListTile(
-      contentPadding: EdgeInsets.all(10.0),
-      title: Text(article.title, style: Styles.FONT_TITLE),
-      subtitle: Text(article.description),
-      trailing: new Image.network(
-        article.image,
-        fit: BoxFit.cover,
-        height: 65,
-        width: 65,
-      ),
-      onTap: () => _onTapped(article)
-    );
-  }
-
-    static _onTapped(Article article) async {
-        try {
-            await launch(article.url, option: Styles.TABS_OPTIONS);
-        } catch (e) {
-            debugPrint(e.toString());
-        }
-    }
 
 }
