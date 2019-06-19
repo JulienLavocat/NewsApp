@@ -21,6 +21,7 @@ class API {
 
   static Future<List<Article>> fetch(int from) async {
     final result = await http.get(_fetchUrl + "?from=" + from.toString());
+
     if (result.statusCode != 200)
       return List();
     else
