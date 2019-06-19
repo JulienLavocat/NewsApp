@@ -64,7 +64,7 @@ class NewsListState extends State<NewsList> {
 
   Widget getNewsBody(BuildContext context) {
     return ListView.separated(
-      separatorBuilder: (context, index) => Divider(),
+      separatorBuilder: (context, index) => Divider(), 
       itemCount: _articles.length,
       itemBuilder: _buildNewsList,
     );

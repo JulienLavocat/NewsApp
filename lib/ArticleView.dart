@@ -9,9 +9,6 @@ import 'Styles.dart';
 class ArticleView {
 
   static ListTile getView(Article article) {
-
-
-
     return ListTile(
         contentPadding: EdgeInsets.all(10.0),
         title: Text(article.title, style: Styles.FONT_TITLE),
