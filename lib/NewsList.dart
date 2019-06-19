@@ -101,8 +101,7 @@ class NewsListState extends State<NewsList> {
   }
 
   _loadMore() async {
-    final result = await API.fetch(_articles.length + 1);
-    print(_articles.length);
+    final result = await API.fetch(_articles.length);
     setState(() {
      _articles.addAll(result);
     });
