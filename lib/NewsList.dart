@@ -3,6 +3,8 @@ import 'package:news/Article.dart';
 import "package:news/API.dart";
 import 'package:news/ArticleView.dart';
 
+import 'Sources.dart';
+
 class NewsList extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => NewsListState();
@@ -18,8 +20,15 @@ class NewsListState extends State<NewsList> {
   _fetchData() async {
     setLoadingState(true);
 
-    _articles.clear();
-    _articles = await API.getLatest();
+    try {
+      await Sources.fetchSources();
+
+      _articles.clear();
+      _articles = await API.getLatest();
+    } catch (e) {
+      setLoadingState(false);
+      setDataLoaded();
+    }
 
     setLoadingState(false);
     setDataLoaded();

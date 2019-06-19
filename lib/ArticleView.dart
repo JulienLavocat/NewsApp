@@ -3,6 +3,7 @@ import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:intl/intl.dart';
 
 import 'Article.dart';
+import 'Sources.dart';
 import 'Styles.dart';
 
 class ArticleView {
@@ -27,7 +28,7 @@ class ArticleView {
   static Text getDescription(Article article) {
       return Text(article.description + "\n\nLe "
       + DateFormat("dd/MM/yyyy à H:mm").format(article.publishedAt.toLocal())
-      + " via " + article.source,
+      + " via " + Sources.fromId(article.source),
       textAlign: TextAlign.justify);
   }
 

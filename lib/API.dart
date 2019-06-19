@@ -9,21 +9,34 @@ class API {
   static final _latestUrl = "https://news.thebad.xyz/latest";
   static final _fetchUrl = "https://news.thebad.xyz/fetch";
   static final _defaultImgUrl = "https://news.thebad.xyz/defaultImage.jpg";
+  static final _sources = "https://news.thebad.xyz/sources";
 
   static Future<List> getLatest() async {
     final result = await http.get(_latestUrl);
-    if(result.statusCode != 200)
-        return List();
+    if (result.statusCode != 200)
+      return List();
     else
-        return _parseResponse(result);
+      return _parseResponse(result);
   }
 
   static Future<List> fetch(int from) async {
     final result = await http.get(_fetchUrl + "?from=" + from.toString());
-    if(result.statusCode != 200)
-        return List();
+    if (result.statusCode != 200)
+      return List();
     else
-        return _parseResponse(result);
+      return _parseResponse(result);
+  }
+
+  static Future<Map> getSources() async {
+    final result = await http.get(_sources);
+
+    Map sources = Map();
+
+    if (result.statusCode != 200) return sources;
+
+    sources = (json.decode(result.body) as Map);
+
+    return sources;
   }
 
   static List _parseResponse(Response response) {
