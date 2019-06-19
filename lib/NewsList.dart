@@ -12,6 +12,8 @@ class NewsList extends StatefulWidget {
 
 class NewsListState extends State<NewsList> {
   final titleFont = TextStyle(fontSize: 18.0);
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorState =
+      new GlobalKey<RefreshIndicatorState>();
 
   List<Article> _articles = List();
   var isLoading = false;
@@ -63,14 +65,21 @@ class NewsListState extends State<NewsList> {
   }
 
   Widget getNewsBody(BuildContext context) {
-    return ListView.separated(
-      separatorBuilder: (context, index) => Divider(), 
-      itemCount: _articles.length,
-      itemBuilder: _buildNewsList,
-    );
+    return RefreshIndicator(
+        key: _refreshIndicatorState,
+        onRefresh: _refreshList,
+        child: ListView.separated(
+          separatorBuilder: (context, index) => Divider(),
+          itemCount: _articles.length,
+          itemBuilder: _buildNewsList,
+        ));
   }
 
   Widget _buildNewsList(BuildContext context, int i) {
     return ArticleView.getView(_articles[i]);
+  }
+
+  Future<Null> _refreshList() {
+    return _fetchData();
   }
 }
